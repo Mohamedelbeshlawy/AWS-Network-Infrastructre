@@ -3,8 +3,8 @@ resource "tls_private_key" "generate_key" {
   rsa_bits  = 4096
 }
 
-resource "aws_key_pair" "newKey" {
-  key_name   = "newKey"
+resource "aws_key_pair" "newPrivateKey" {
+  key_name   = "newPrivateKey"
   public_key = tls_private_key.generate_key.public_key_openssh
 }
 
