@@ -1,7 +1,3 @@
-output "nat_ip" {
-  value = aws_eip.mainEIP.public_ip
-}
-
 output "public-1_id" {
   value = aws_subnet.public-1.id
 }
