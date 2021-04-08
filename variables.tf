@@ -33,3 +33,7 @@ variable "AZ-2" {
 variable "region" {
   type = string
 }
+
+variable "key" {
+  type = string
+}

@@ -1,5 +1,5 @@
 resource "aws_instance" "bastion" {
-  ami                    = "ami-08bac620dc84221eb"
+  ami                    = var.ami
   instance_type          = "t2.micro"
   key_name               = aws_key_pair.newPrivateKey.key_name
   vpc_security_group_ids = [aws_security_group.first-security-group.id]
@@ -14,7 +14,7 @@ resource "aws_instance" "bastion" {
 }
 
 resource "aws_instance" "private" {
-  ami                    = "ami-08bac620dc84221eb"
+  ami                    = var.ami
   instance_type          = "t2.micro"
   key_name               = aws_key_pair.newPrivateKey.key_name
   vpc_security_group_ids = [aws_security_group.second-security-group.id]

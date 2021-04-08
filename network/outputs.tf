@@ -17,3 +17,7 @@ output "private-2_id" {
 output "vpc_id" {
     value = aws_vpc.mainVPC.id
 }
+
+output "vpc_cider_block" {
+  value = aws_vpc.iti.cidr_block
+}
