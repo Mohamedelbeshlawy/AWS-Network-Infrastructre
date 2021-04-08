@@ -41,17 +41,17 @@ resource "aws_security_group" "second-security-group" {
 }
 
 resource "aws_security_group" "rds" {
-  name = "rds"
-  vpc_id      = module.networkMod.vpc_id
+  name   = "rds"
+  vpc_id = module.networkMod.vpc_id
 
-    ingress {
+  ingress {
     description = "TLS from VPC"
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
     cidr_blocks = [module.networkMod.vpc_cider_block]
   }
-  
+
   egress {
     from_port   = 0
     to_port     = 0
@@ -62,17 +62,17 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_security_group" "redis" {
-  name = "redis"
-  vpc_id      = module.networkMod.vpc_id
+  name   = "redis"
+  vpc_id = module.networkMod.vpc_id
 
-    ingress {
+  ingress {
     description = "TLS from VPC"
     from_port   = 6379
     to_port     = 6379
     protocol    = "tcp"
     cidr_blocks = [module.networkMod.vpc_cider_block]
   }
-  
+
   egress {
     from_port   = 0
     to_port     = 0
