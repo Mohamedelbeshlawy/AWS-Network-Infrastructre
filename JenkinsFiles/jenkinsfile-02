@@ -1,0 +1,29 @@
+pipeline {
+    agent { label 'aws-slave' }
+
+    stages {
+        stage('Preparation') {
+            steps {
+                git branch: 'rds_redis', url: 'https://github.com/Mohamedelbeshlawy/jenkins_nodejs_example.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'docker build -f dockerfile . -t beshlawy38/node_app:v1.0'
+            }
+        }
+        stage('Artifact') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh 'docker login -u ${USERNAME} -p ${PASSWORD}'
+                    sh 'docker push beshlawy38/node_app:v1.0'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh '''docker run -d -t -i -e RDS_HOSTNAME='terraform-20210408153158140700000001.cide529wfs4n.eu-west-1.rds.amazonaws.com' -e RDS_USERNAME='admin' -e RDS_PASSWORD='admin123' -e RDS_PORT='3306' -e REDIS_HOSTNAME='mu-cluster.syl0tm.0001.euw1.cache.amazonaws.com' -e REDIS_PORT='6379' -p 3030:3000 beshlawy38/node_app:v1.0'''
+            }
+        }
+    }
+}

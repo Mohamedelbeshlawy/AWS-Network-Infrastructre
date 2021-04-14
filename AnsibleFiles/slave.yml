@@ -1,0 +1,42 @@
+- hosts: all
+  remote_user: ubuntu
+  become: yes
+  tasks:
+    - name: update apt
+      apt:
+        update_cache: yes
+    
+    - name: create directory
+      file:
+        name: jenkins_home
+        state: directory
+        mode: 0777
+
+    - name: install openjdk
+      apt:
+        name: openjdk-8-jdk
+        state: present
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt: update_cache=yes name=docker-ce state=latest
+
+    - name: Intsall npm
+      apt:
+        name: npm
+        state: present
+
+    - name: Install node js
+      apt:
+        name: nodejs
+        state: present
+
